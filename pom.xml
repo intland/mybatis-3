@@ -29,7 +29,7 @@
 
   <groupId>org.mybatis</groupId>
   <artifactId>mybatis</artifactId>
-  <version>3.5.19</version>
+  <version>3.5.19.2</version>
 
   <name>mybatis</name>
   <description>The MyBatis SQL mapper framework makes it easier to use a relational database with object-oriented
@@ -106,7 +106,7 @@
     <dependency>
       <groupId>ognl</groupId>
       <artifactId>ognl</artifactId>
-      <version>3.4.4</version>
+      <version>3.4.4.1</version>
       <scope>compile</scope>
       <optional>true</optional>
     </dependency>
