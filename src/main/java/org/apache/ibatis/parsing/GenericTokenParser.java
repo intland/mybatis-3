@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2023 the original author or authors.
+ *    Copyright 2009-2025 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ public class GenericTokenParser {
     }
     char[] src = text.toCharArray();
     int offset = 0;
-    final StringBuilder builder = new StringBuilder();
+    final StringBuilder builder = new StringBuilder(128);
     StringBuilder expression = null;
     do {
       if (start > 0 && src[start - 1] == '\\') {
@@ -51,7 +51,7 @@ public class GenericTokenParser {
       } else {
         // found open token. let's search close token.
         if (expression == null) {
-          expression = new StringBuilder();
+          expression = new StringBuilder(128);
         } else {
           expression.setLength(0);
         }

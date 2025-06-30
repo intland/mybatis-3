@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2024 the original author or authors.
+ *    Copyright 2009-2025 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.ibatis.annotations.AutomapConstructor;
 import org.apache.ibatis.annotations.Param;
@@ -480,7 +481,10 @@ public class DefaultResultSetHandler implements ResultSetHandler {
 
   private boolean applyPropertyMappings(ResultSetWrapper rsw, ResultMap resultMap, MetaObject metaObject,
       ResultLoaderMap lazyLoader, String columnPrefix) throws SQLException {
-    final Set<String> mappedColumnNames = rsw.getMappedColumnNames(resultMap, columnPrefix);
+
+    final Set<String> mappedColumnNames = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+    mappedColumnNames.addAll(rsw.getMappedColumnNames(resultMap, columnPrefix));
+
     boolean foundValues = false;
     final List<ResultMapping> propertyMappings = resultMap.getPropertyResultMappings();
     for (ResultMapping propertyMapping : propertyMappings) {
@@ -489,8 +493,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
         // the user added a column attribute to a nested result map, ignore it
         column = null;
       }
-      if (propertyMapping.isCompositeResult()
-          || column != null && mappedColumnNames.contains(column.toUpperCase(Locale.ENGLISH))
+      if (propertyMapping.isCompositeResult() || column != null && mappedColumnNames.contains(column)
           || propertyMapping.getResultSet() != null) {
         Object value = getPropertyMappingValue(rsw.getResultSet(), metaObject, propertyMapping, lazyLoader,
             columnPrefix);

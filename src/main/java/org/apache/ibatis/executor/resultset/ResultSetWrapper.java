@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2024 the original author or authors.
+ *    Copyright 2009-2025 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -179,7 +179,14 @@ public class ResultSetWrapper {
   }
 
   private String getMapKey(ResultMap resultMap, String columnPrefix) {
-    return resultMap.getId() + ":" + columnPrefix;
+    String id = resultMap.getId();
+    int capacity = id.length() + 1 + (columnPrefix == null ? 0 : columnPrefix.length());
+    StringBuilder sb = new StringBuilder(capacity);
+    sb.append(id).append(':');
+    if (columnPrefix != null) {
+      sb.append(columnPrefix);
+    }
+    return sb.toString();
   }
 
   private Set<String> prependPrefixes(Set<String> columnNames, String prefix) {

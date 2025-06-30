@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2024 the original author or authors.
+ *    Copyright 2009-2025 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -321,7 +321,7 @@ public class Reflector {
   }
 
   private String getSignature(Method method) {
-    StringBuilder sb = new StringBuilder();
+    StringBuilder sb = new StringBuilder(128);
     Class<?> returnType = method.getReturnType();
     sb.append(returnType.getName()).append('#');
     sb.append(method.getName());
